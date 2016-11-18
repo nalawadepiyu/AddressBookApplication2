@@ -15,7 +15,7 @@ public class AddressBook {
 	private ArrayList<AddressEntry> addressEntryList=new ArrayList<AddressEntry>() ;
 
 
-    /*This method will return list of all addressentries */
+	/*This method will return list of all addressentries */
 	public ArrayList<AddressEntry> list() throws ClassNotFoundException, SQLException {
 
 		DBOperation operation=new DBOperation();
@@ -23,10 +23,11 @@ public class AddressBook {
 	}
 
 	/*This method will add new record in list of all addressentries */
-	public void addNewRecords(AddressEntry ae) throws SQLException, ClassNotFoundException {
+	public ArrayList<AddressEntry> addNewRecords(AddressEntry ae) throws SQLException, ClassNotFoundException {
 		this.addressEntryList.add(ae);
 		DBOperation operation=new DBOperation();
 		operation.addToDB(ae);
+		return addressEntryList;
 	}
 
 
@@ -42,16 +43,31 @@ public class AddressBook {
 	/*This method will remove a record in list of all addressentries */
 	public void removeRecord(int id) throws ClassNotFoundException, SQLException {
 
-		for (AddressEntry addressEntry : addressEntryList) {
+		//		for (AddressEntry addressEntry : addressEntryList) {
+		//
+		//			if (addressEntry.getId()==id) {
+		//
+		//				addressEntryList.remove(addressEntry);
+		//
+		//				DBOperation operation = new DBOperation();
+		//				operation.deleteRecord(id);
+		//
+		//			}
+		//		}
 
-			if (addressEntry.getId()==id) {
+		AddressEntry [] datavalues=addressEntryList.toArray(new AddressEntry[addressEntryList.size()] );
+		for (int i=0;i<datavalues.length;i++)
+		{
 
-				addressEntryList.remove(addressEntry);
+			if (datavalues[i].getId() == id) {
+
+				addressEntryList.remove(i);
 
 				DBOperation operation = new DBOperation();
 				operation.deleteRecord(id);
 
 			}
+
 		}
 
 
